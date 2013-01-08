@@ -5,7 +5,8 @@ SONAME = liblinenoise.so.$(MAJOR_VERSION)
 LIB = $(SONAME)$(EXTRA_VERSION)
 
 export CFLAGS ?= -Os -g
-CFLAGS += -Wall -fpic -DUSE_UTF8
+CFLAGS += -Wall -fpic -DUSE_UTF8 \
+    -fvisibility=hidden -DHAVE_VISIBILITY=1 -DBUILDING_LINENOISE=1
 LIBDIR ?= /usr/lib
 INCLUDEDIR ?= /usr/include
 
