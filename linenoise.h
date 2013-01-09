@@ -37,6 +37,12 @@
 #ifndef __LINENOISE_H
 #define __LINENOISE_H
 
+#if BUILDING_LINENOISE && HAVE_VISIBILITY
+#define LINENOISE_EXPORTED __attribute__((__visibility__("default")))
+#else
+#define LINENOISE_EXPORTED
+#endif
+
 #ifndef NO_COMPLETION
 typedef struct linenoiseCompletions {
   size_t len;
@@ -44,19 +50,19 @@ typedef struct linenoiseCompletions {
 } linenoiseCompletions;
 
 typedef void(linenoiseCompletionCallback)(const char *, linenoiseCompletions *);
-void linenoiseSetCompletionCallback(linenoiseCompletionCallback *);
-void linenoiseAddCompletion(linenoiseCompletions *, const char *);
+LINENOISE_EXPORTED void linenoiseSetCompletionCallback(linenoiseCompletionCallback *);
+LINENOISE_EXPORTED void linenoiseAddCompletion(linenoiseCompletions *, const char *);
 #endif
 
 typedef int(linenoiseCharacterCallback)(const char *, size_t, char);
-void linenoiseSetCharacterCallback(linenoiseCharacterCallback *, char);
+LINENOISE_EXPORTED void linenoiseSetCharacterCallback(linenoiseCharacterCallback *, char);
 
-char *linenoise(const char *prompt);
-int linenoiseHistoryAdd(const char *line);
-int linenoiseHistorySetMaxLen(int len);
-int linenoiseHistorySave(const char *filename);
-int linenoiseHistoryLoad(const char *filename);
-void linenoiseHistoryFree(void);
-char **linenoiseHistory(int *len);
+LINENOISE_EXPORTED char *linenoise(const char *prompt);
+LINENOISE_EXPORTED int linenoiseHistoryAdd(const char *line);
+LINENOISE_EXPORTED int linenoiseHistorySetMaxLen(int len);
+LINENOISE_EXPORTED int linenoiseHistorySave(const char *filename);
+LINENOISE_EXPORTED int linenoiseHistoryLoad(const char *filename);
+LINENOISE_EXPORTED void linenoiseHistoryFree(void);
+LINENOISE_EXPORTED char **linenoiseHistory(int *len);
 
 #endif /* __LINENOISE_H */
